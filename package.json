@@ -1,0 +1,17 @@
+{
+  "name": "imouto_bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/marscos/imouto_bot.git",
+  "author": "Marssis <mcarvalhodash@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "micro": "^9.3.3",
+    "node-fetch": "^2.3.0",
+    "telegraf": "^3.27.1"
+  },
+  "scripts": {
+    "start": "micro"
+  }
+}
