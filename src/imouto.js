@@ -30,7 +30,7 @@ const url = 'https://graphql.anilist.co'
 
 function getMessageText(media) { 
     return `[${media.type}] <b>${media.title.english?media.title.english:media.title.native} (${media.title.romaji})</b>
-<i>${media.genres.join(", ")}</i>
+<i>${media.genres.join(", ")}</i> <a href="${media.coverImage.large}"></a>
 ${media.status} → ${media.type=='MANGA'?(media.chapters==null?'???':media.chapters):media.episodes} ${media.type=='MANGA'?'Chapters':'Episodes'}
 Mean Score: <b>${media.meanScore}</b> (<a href="${media.siteUrl}">AniList</a>)
 
