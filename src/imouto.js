@@ -32,7 +32,7 @@ function getMessageText(media) {
     return `[${media.type}] <b>${media.title.english?media.title.english:media.title.native} (${media.title.romaji})</b>
 <i>${media.genres.join(", ")}</i>
 ${media.status} → ${media.type=='MANGA'?(media.chapters==null?'???':media.chapters):media.episodes} ${media.type=='MANGA'?'Chapters':'Episodes'}
-Mean Score: <b>${media.meanScore}</b>
+Mean Score: <b>${media.meanScore}</b> (<a href=${media.siteUrl}>AniList</a>)
 
 ${cleanHTMLFromText(media.description)}`
 }
@@ -78,7 +78,7 @@ function handleData(data) {
             title: `[${media.type}] ${media.title.english?media.title.english:media.title.romaji}`,
             description: cleanHTMLFromText(media.description),
             url: media.siteUrl,
-            hide_url: false,
+            hide_url: true,
             thumb_url: media.coverImage.large,
             thumb_width: 373,
             thumb_height: 567,
