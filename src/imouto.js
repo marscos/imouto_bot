@@ -29,11 +29,12 @@ query ($title: String) {
 const url = 'https://graphql.anilist.co'
 
 function getMessageText(media) { 
-    return `<b>${media.title.english?media.title.english:media.title.native} (${media.title.romaji})</b> ♦ ${media.type}\\n
-        <i>${media.genres.join(", ")}</i>\\n
-        ${media.status} → ${media.type=='MANGA'?(media.chapters==null?'???':media.chapters):media.episodes} ${media.type=='MANGA'?'Chapters':'Episodes'}\\n
-        Mean Score: <b>${media.meanScore}</b>\\n\\n
-        ${cleanHTMLFromText(media.description)}`
+    return `[${media.type}] <b>${media.title.english?media.title.english:media.title.native} (${media.title.romaji})</b>
+<i>${media.genres.join(", ")}</i>
+${media.status} → ${media.type=='MANGA'?(media.chapters==null?'???':media.chapters):media.episodes} ${media.type=='MANGA'?'Chapters':'Episodes'}
+Mean Score: <b>${media.meanScore}</b>
+
+${cleanHTMLFromText(media.description)}`
 }
 
 function cleanHTMLFromText(text) {
@@ -74,10 +75,10 @@ function handleData(data) {
         return {
             type: "article",
             id: media.id,
-            title: (media.title.english?media.title.english:media.title.romaji)+" ♦ "+media.type,
-            description: media.description,
+            title: `[${media.type}] ${media.title.english?media.title.english:media.title.romaji}`,
+            description: cleanHTMLFromText(media.description),
             url: media.siteUrl,
-            hide_url: true,
+            hide_url: false,
             thumb_url: media.coverImage.large,
             thumb_width: 373,
             thumb_height: 567,
