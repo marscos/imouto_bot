@@ -4,6 +4,7 @@ const query = `
 query ($title: String) { 
   Page (page:1, perPage: 5) {
     SERIES: media (search: $title, sort: SEARCH_MATCH) { 
+        id
         title {
           english
           romaji
@@ -28,11 +29,10 @@ query ($title: String) {
 const url = 'https://graphql.anilist.co'
 
 function getMessageText(media) { 
-    return `<b>${media.title.english?media.title.english:media.title.native} (${media.title.romaji})</b> ♦ ${media.type}<br/>
-        <i>${media.genres.join(", ")}</i><br/>
-        ${media.status} → ${media.type=='MANGA'?(media.chapters==null?'???':media.chapters):media.episodes} ${media.type=='MANGA'?'Chapters':'Episodes'}<br/>
-        Mean Score: <b>${media.meanScore}</b><br/><br/>
-        
+    return `<b>${media.title.english?media.title.english:media.title.native} (${media.title.romaji})</b> ♦ ${media.type}%0A
+        <i>${media.genres.join(", ")}</i>%0A
+        ${media.status} → ${media.type=='MANGA'?(media.chapters==null?'???':media.chapters):media.episodes} ${media.type=='MANGA'?'Chapters':'Episodes'}%0A
+        Mean Score: <b>${media.meanScore}</b>%0A%0A
         ${media.description}`
 }
 
@@ -69,12 +69,14 @@ function handleData(data) {
     let results = data.data.Page.SERIES.map((media, index) => {
         return {
             type: "article",
-            id: index,
+            id: media.id,
             title: media.title.english+" ♦ "+media.type,
             description: media.description,
             url: media.siteUrl,
             hide_url: true,
             thumb_url: media.coverImage.large,
+            thumb_width: 373,
+            thumb_height: 567,
             input_message_content: {
                 message_text: getMessageText(media),
                 parse_mode: "HTML"

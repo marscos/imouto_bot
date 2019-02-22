@@ -12,10 +12,10 @@ bot.getMe().then((bot_informations) => {
 bot.setWebhook(process.env.ORIGIN)
 
 async function handler(request, response) {
-	const { inline_query } = await json(request)
+    const { inline_query } = await json(request)
     if (inline_query && inline_query.query) {
         const results = await imouto(inline_query.query)
-        bot.answerInlineQuery(inline_query.id, JSON.stringify(results))
+        bot.answerInlineQuery(inline_query.id, results)
     }
 
     return ''
