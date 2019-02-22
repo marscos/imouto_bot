@@ -29,11 +29,15 @@ query ($title: String) {
 const url = 'https://graphql.anilist.co'
 
 function getMessageText(media) { 
-    return `<b>${media.title.english?media.title.english:media.title.native} (${media.title.romaji})</b> ♦ ${media.type}%0A
-        <i>${media.genres.join(", ")}</i>%0A
-        ${media.status} → ${media.type=='MANGA'?(media.chapters==null?'???':media.chapters):media.episodes} ${media.type=='MANGA'?'Chapters':'Episodes'}%0A
-        Mean Score: <b>${media.meanScore}</b>%0A%0A
-        ${media.description}`
+    return `<b>${media.title.english?media.title.english:media.title.native} (${media.title.romaji})</b> ♦ ${media.type}\\n
+        <i>${media.genres.join(", ")}</i>\\n
+        ${media.status} → ${media.type=='MANGA'?(media.chapters==null?'???':media.chapters):media.episodes} ${media.type=='MANGA'?'Chapters':'Episodes'}\\n
+        Mean Score: <b>${media.meanScore}</b>\\n\\n
+        ${cleanHTMLFromText(media.description)}`
+}
+
+function cleanHTMLFromText(text) {
+    return text.replace(/<(?:.|\n)*?>/gm, '')
 }
 
 async function getSearchResults(title) {
@@ -70,7 +74,7 @@ function handleData(data) {
         return {
             type: "article",
             id: media.id,
-            title: media.title.english+" ♦ "+media.type,
+            title: (media.title.english?media.title.english:media.title.romaji)+" ♦ "+media.type,
             description: media.description,
             url: media.siteUrl,
             hide_url: true,
