@@ -2,8 +2,8 @@ const fetch = require('node-fetch');
 
 const query = `
 query ($title: String) { 
-  Page (page:1, perPage: 5) {
-    SERIES: media (search: $title, sort: SEARCH_MATCH) { 
+  Page (page:1, perPage: 8) {
+    SERIES: media (search: $title, sort: POPULARITY_DESC) { 
         id
         title {
           english
@@ -71,7 +71,7 @@ function handleResponse(response) {
 }
 
 function handleData(data) {
-    let results = data.data.Page.SERIES.map((media, index) => {
+    let results = data.data.Page.SERIES.map((media) => {
         return {
             type: "article",
             id: media.id,
