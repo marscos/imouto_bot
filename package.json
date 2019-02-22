@@ -12,6 +12,6 @@
     "telegraf": "^3.27.1"
   },
   "scripts": {
-    "start": "micro"
+    "start": "micro -l ${ORIGIN-localhost}:${PORT-3000}"
   }
 }
