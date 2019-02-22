@@ -15,9 +15,9 @@ async function handler(request, response) {
 	const { inline_query } = await json(request)
     if (inline_query && inline_query.query) {
         const results = await imouto(inline_query.query)
-        bot.answerInlineQuery(inline_query.id, results)
+        bot.answerInlineQuery(inline_query.id, JSON.stringify(results))
     }
-        
+
     return ''
 }
 
