@@ -1,9 +1,9 @@
 const fetch = require('node-fetch');
 
 const query = `
-query ($title: String) { 
-  Page (page:1, perPage: 8) {
-    SERIES: media (search: $title, sort: POPULARITY_DESC) { 
+query ($offset: Int, $title: String) { 
+  Page (page: $offset, perPage: 8) {
+    SERIES: media (search: $title, sort: SEARCH_MATCH) { 
         id
         title {
           english
@@ -41,7 +41,8 @@ function cleanHTMLFromText(text) {
     return text.replace(/<(?:.|\n)*?>/gm, '')
 }
 
-async function getSearchResults(title) {
+// Offset in inline query request is used as graphql query page
+async function getSearchResults(offset, title) {
     let options = {
         method: 'POST',
         headers: {
@@ -50,27 +51,28 @@ async function getSearchResults(title) {
         },
         body: JSON.stringify({
             query: query,
-            variables: {title}
+            variables: {offset, title}
         })
     }
 
     try {
         const response = await fetch(url, options)
-        const data = await handleResponse(response)
-        const results = handleData(data)
+        const data = await handleAniListResponse(response)
+        const results = handleAniListResponseData(data)
         return results
     } catch(error) {
         handleError(error)
     }     
 }
 
-function handleResponse(response) {
+function handleAniListResponse(response) {
     return response.json().then( (json) => {
         return response.ok ? json : Promise.reject(json)
     })
 }
 
-function handleData(data) {
+// Digest AniList response data, returning it as a Telegram inline query results object
+function handleAniListResponseData(data) {
     let results = data.data.Page.SERIES.map((media) => {
         return {
             type: "article",
@@ -91,7 +93,7 @@ function handleData(data) {
     return results
 }
 
-function handleError(error) {
+function handleError(error) { // TODO
     console.error(error)
 }
 

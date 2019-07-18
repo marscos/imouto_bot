@@ -14,8 +14,9 @@ bot.setWebhook(process.env.ORIGIN)
 async function handler(request, response) {
     const { inline_query } = await json(request)
     if (inline_query && inline_query.query) {
-        const results = await imouto(inline_query.query)
-        bot.answerInlineQuery(inline_query.id, results)
+        let offset = inline_query.offset ? parseInt(inline_query.offset) : 1
+        const results = await imouto(offset, inline_query.query)
+        bot.answerInlineQuery(inline_query.id, results, {"next_offset": (offset+1).toString()})
     }
 
     return ''
