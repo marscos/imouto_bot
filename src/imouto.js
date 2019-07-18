@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 const query = `
 query ($offset: Int, $title: String) { 
-  Page (page: $offset, perPage: 8) {
+  Page (page: $offset, perPage: 5) {
     SERIES: media (search: $title, sort: SEARCH_MATCH) { 
         id
         title {
