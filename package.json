@@ -13,6 +13,10 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
   "dependencies": {
     "dotenv": "^6.2.0",
     "micro": "^9.3.3",
