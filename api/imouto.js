@@ -1,4 +1,4 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
 const query = `
 query ($offset: Int, $title: String) { 
@@ -60,30 +60,6 @@ function cleanHTMLFromText(text) {
   return text.replace(/<(?:.|\n)*?>/gm, '')
 }
 
-// Offset in inline query request is used as graphql query page
-async function getSearchResults(offset, title) {
-  let options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
-    body: JSON.stringify({
-      query: query,
-      variables: { offset, title }
-    })
-  }
-
-  try {
-    const response = await fetch(url, options)
-    const data = await handleAniListResponse(response)
-    const results = handleAniListResponseData(data)
-    return results
-  } catch (error) {
-    handleError(error)
-  }
-}
-
 function handleAniListResponse(response) {
   return response.json().then(json => {
     return response.ok ? json : Promise.reject(json)
@@ -119,4 +95,26 @@ function handleError(error) {
   console.error(error)
 }
 
-module.exports = getSearchResults
+// Offset in inline query request is used as graphql query page
+export default async function getSearchResults(offset, title) {
+  let options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify({
+      query: query,
+      variables: { offset, title }
+    })
+  }
+
+  try {
+    const response = await fetch(url, options)
+    const data = await handleAniListResponse(response)
+    const results = handleAniListResponseData(data)
+    return results
+  } catch (error) {
+    handleError(error)
+  }
+}
