@@ -1,9 +1,9 @@
-import Telegram from 'telegraf'
+import Telegraf from 'telegraf'
 
-const bot = new Telegram(process.env.BOT_KEY)
+const bot = new Telegraf(process.env.BOT_KEY)
 
-bot.getMe().then(bot_informations => {
+bot.telegram.getMe().then(bot_informations => {
   console.log(`${bot_informations.username} online`)
 })
 
-bot.setWebhook(process.env.ORIGIN)
+bot.telegram.setWebhook(process.env.ORIGIN)
