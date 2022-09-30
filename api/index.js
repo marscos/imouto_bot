@@ -1,16 +1,7 @@
 import dotenv from 'dotenv'
 if (process.env.BOT_KEY === undefined) dotenv.config()
-import Telegram from 'telegraf/telegram'
 import { json } from 'micro'
 import imouto from './imouto.js'
-
-const bot = new Telegram(process.env.BOT_KEY)
-
-bot.getMe().then(bot_informations => {
-  console.log(`${bot_informations.username} online`)
-})
-
-bot.setWebhook(process.env.ORIGIN)
 
 export default async (request, response) => {
   const { inline_query } = await json(request)

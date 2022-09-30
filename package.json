@@ -6,7 +6,7 @@
   "author": "Marssis <mcarvalhodash@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "micro -l tcp://0.0.0.0:${PORT-3000}"
+    "deploy-telegram": "node telegram.js"
   },
   "husky": {
     "hooks": {
