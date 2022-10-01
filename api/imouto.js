@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 
 const query = `
 query ($offset: Int, $title: String) { 
-  Page (page: $offset, perPage: 1) {
+  Page (page: $offset, perPage: 8) {
     SERIES: media (search: $title, sort: SEARCH_MATCH) { 
         id
         title {
