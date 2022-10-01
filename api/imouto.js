@@ -29,8 +29,6 @@ query ($offset: Int, $title: String) {
 const url = 'https://graphql.anilist.co'
 
 function getMessageText(media) {
-  console.log(media)
-  return 'media.title.english'
   return `<b>${
     media.title.english
       ? media.title.english
@@ -77,12 +75,12 @@ function handleAniListResponseData(data) {
       title: `[${media.type}] ${
         media.title.english ? media.title.english : media.title.romaji
       }`,
-      // description: cleanHTMLFromText(media.description),
-      // url: media.siteUrl,
-      // hide_url: true,
-      // thumb_url: media.coverImage.large,
-      // thumb_width: 373,
-      // thumb_height: 567,
+      description: cleanHTMLFromText(media.description),
+      url: media.siteUrl,
+      hide_url: true,
+      thumb_url: media.coverImage.large,
+      thumb_width: 373,
+      thumb_height: 567,
       input_message_content: {
         message_text: getMessageText(media),
         parse_mode: 'HTML'
