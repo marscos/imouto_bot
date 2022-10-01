@@ -10,11 +10,11 @@ export default async (request, response) => {
     let offset = inline_query.offset ? parseInt(inline_query.offset) : 1
     const results = await imouto(offset, inline_query.query)
     const { telegram } = new Telegraf(process.env.BOT_KEY)
-    telegram.answerInlineQuery(inline_query.id, results, {
+    console.log(inline_query)
+    return response.status(200)
+    return await telegram.answerInlineQuery(inline_query.id, results, {
       next_offset: (offset + 1).toString()
     })
-
-    return response.status(200).json(results)
   }
 
   return ''
