@@ -14,16 +14,18 @@ export default async (request, response) => {
     console.log(
       await telegram.answerInlineQuery(
         inline_query.id,
-        {
-          type: 'article',
-          id: inline_query.id,
-          title: `ok`,
-          description: 'xDD',
-          input_message_content: {
-            message_text: 'xD',
-            parse_mode: 'HTML'
+        [
+          {
+            type: 'article',
+            id: inline_query.id,
+            title: `ok`,
+            description: 'xDD',
+            input_message_content: {
+              message_text: 'xD',
+              parse_mode: 'HTML'
+            }
           }
-        },
+        ],
         {
           next_offset: (offset + 1).toString()
         }
